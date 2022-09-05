@@ -1,18 +1,6 @@
-Visual Studio has added the full set of dependencies for ASP.NET Web API 2 to project 'Aplikacija'. 
+# rwa_project
 
-The Global.asax.cs file in the project may require additional changes to enable ASP.NET Web API.
+This is web application that manipulates with customers, products, categories, subcategories and receipts. The main point was learning CRUD operations with SQL database.
+Also, I learned to work with new tehnologies in .NET: MVC and Web Forms.
 
-1. Add the following namespace references:
-
-    using System.Web.Http;
-    using System.Web.Routing;
-
-2. If the code does not already define an Application_Start method, add the following method:
-
-    protected void Application_Start()
-    {
-    }
-
-3. Add the following lines to the beginning of the Application_Start method:
-
-    GlobalConfiguration.Configure(WebApiConfig.Register); //generirala se klasa web api config s rutama i ovo kopiramo u global.asax
+In demo folder you can find video demonstration of the project.
