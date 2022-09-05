@@ -1,0 +1,145 @@
+﻿@model  IEnumerable<Kupac>
+@{
+    ViewBag.Title = "Customers";
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+
+    <div class="jumbotron">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Email</th>
+                    <th>Telephone</th>
+                    <th>City</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+
+
+    @section scripts {
+        <script>
+            // import { data } from "jquery";
+
+            const dataTableConfig = {
+                ajax: {
+                    url: '/api/kupci',
+                    dataSrc: ''
+                },
+                lengthMenu: [10, 20, 30, 40, 50],
+                columns: [
+                    { data: 'IDKupac' },
+                    { data: 'Ime' },
+                    { data: 'Prezime' },
+                    {
+                        data: 'Email',
+                        render: function (email) {
+                           return `<a href='mailto:${email}'>${email}</a>`
+                        }
+                    },
+                    { data: 'Telefon' },
+                    {
+                        data: 'GradID'
+                    },
+                    {
+                        data: '',
+                        render: function (data, type, kupac) {
+                            return `<button
+                                    class="btn btn-danger btn-sm btnDel",
+                                    data-id=${kupac.IDKupac}
+                                    data-ime=${kupac.Ime}
+                                    data-prezime=${kupac.Prezime}>
+                                    Delete
+                                    </button>`
+                        }
+                    },
+                    {
+                        data: '',
+                        render: function (data, type, kupac) {
+                            return `<button
+                                class="btn btn-warning btn-sm btnDet",
+                                data-id=${kupac.IDKupac}>
+                                Details
+                                </button>`
+                        }
+                    }
+
+
+                ]
+
+            }
+
+            let deleteBtn;
+
+            const myTable = $('.table')
+                .DataTable(dataTableConfig)
+                .on('click', '.btnDel', onDeleteEvent)
+                .on('click', '.btnDet', onDetailsEvent);
+
+
+            function onDeleteEvent(e) {
+                deleteBtn = this;
+                const { id, ime, prezime } = deleteBtn.dataset;
+
+                if (confirm(`Do you really want to delete customer ${ime} ${prezime}?`))
+                    deleteKupac(id);
+            }
+
+            
+
+            function onDetailsEvent(e) {
+                const { id } = this.dataset;
+                showDetails(id);
+            }
+
+            function deleteKupac(id) {
+                $.ajax({
+                    url: `/api/kupci/${id}`,
+                    method: 'delete',
+                })
+                    .done(function (message) {
+                        console.log(message);
+                        myTable
+                            .row($(deleteBtn).parents('tr'))
+                            .remove()
+                            .draw();
+                    })
+                    .fail(function () {
+                        console.log('Kupac nije obrisan');
+                    })
+            }
+
+            function showDetails(id) {
+                $.ajax({
+                    url: '',
+                    method: 'post'
+                })
+                    .done(function (message) {
+                        console.log('Detalji');
+
+
+                    })
+                    .fail(function () {
+                        console.log('Greska-detalji');
+                    })
+                window.location.href = `/Home/Details/${id}`;
+            }
+
+        </script>
+
+    }
+
+
+
+
+

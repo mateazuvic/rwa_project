@@ -1,0 +1,56 @@
+﻿body {
+}
+
+.title{
+    text-align:center;
+}
+
+.form-control:focus {
+    background-color:papayawhip;
+    box-shadow: 0 0 5px goldenrod;
+    border: 2px solid darkgoldenrod;
+}
+
+.center {
+    margin-left: 380px;
+    width: 400px;
+    background-image: url('../slike/background1.jpg');
+    border: 2px solid lightgray;
+}
+
+.input{
+    margin-left:10px;
+   
+}
+
+.btn{
+    margin-left:30px;
+}
+
+.lb{
+    font-size:18px;
+    color: dimgrey;
+    padding-bottom:5px;
+}
+
+.lbl{
+    margin-left:15px;
+}
+
+.login {
+    margin-left: 390px;
+    width: 400px;
+    background-image: url('../slike/background1.jpg');
+    border: 2px solid lightgray;
+    height: 400px;
+}
+
+.tekst{
+    font-size:16px;
+   margin-left:45px;
+   color:dimgray;
+}
+
+.tekst:hover{
+    color: goldenrod;
+}

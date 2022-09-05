@@ -1,0 +1,63 @@
+﻿#form1 {
+    width: 1000px;
+    margin-left: 250px;
+    
+}
+
+#DropDownList1{
+    margin-bottom:20px;
+    
+   
+}
+
+#ddlRowsCount, #lblRows, #lblRows2{
+    float:right;
+ 
+}
+
+#lblRows, #lblRows2 {
+    padding-right: 10px;
+    padding-left: 10px;
+    line-height:33px;
+    font-size:16px;
+    
+}
+
+.jumbotron{
+    height:70px;
+    background:url(../slike/background1.jpg);
+}
+
+#lblTitle{
+    font-size:27px;
+    font-weight:bold;
+    color:dimgrey;
+    
+}
+
+#link{
+   float:right;
+   font-size:20px;
+}
+
+.GridPager a, .GridPager span {
+    display: block;
+    height: 20px;
+    width: 20px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+}
+
+.GridPager a {
+    background-color: lightgray;
+    color: #969696;
+    border: 1px solid #969696;
+    margin-right:10px;
+}
+
+.GridPager span {
+    background-color: #A1DCF2;
+    color: azure;
+    border: 1px solid #3AC0F2;
+}

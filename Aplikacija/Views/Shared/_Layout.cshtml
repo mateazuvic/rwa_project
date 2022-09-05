@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My RWA Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-fixed-top" style="background-color: #e3f2fd;">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("Adventure store", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            @Html.ActionLink(linkText: "Customers",
+                                         actionName: "Index",
+                                         controllerName: "Home")
+                        </li>
+                        <li>
+                            <a href="/../EditKupac.aspx">Edit customers</a>
+                        </li>
+                        <li>
+                            @Html.ActionLink(linkText: "Products",
+                                         actionName: "Index",
+                                         controllerName: "Products")
+                        </li>
+                        <li>
+                            @Html.ActionLink(linkText: "Subcategories",
+                                         actionName: "Index",
+                                         controllerName: "Potkategorije")
+                        </li>
+                        <li>
+                            @Html.ActionLink(linkText: "Categories",
+                                         actionName: "Index",
+                                         controllerName: "Kategorije")
+                        </li>
+                        <li>
+                            
+                            
+                        </li>
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
+            </div>
+        </div>
+   
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p class="signature">&copy; @DateTime.Now.Year - Matea Žuvić</p>
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <h4 style="text-align:center"><a href="~/Account/Login">Click here to log in</a></h4>
+            }
+
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jquery-ui")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/datatables")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

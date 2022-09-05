@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Aplikacija.Stavka>
+
+@{
+    ViewBag.Title = "Items on receipt";
+}
+
+<h2>Stavke računa </h2>
+
+<link href="~/Content/stavkeCss.css" rel="stylesheet" />
+
+<table class="table table-condensed table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Kolicina)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CijenaPoKomadu)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PopustUPostocima)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UkupnaCijena)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Proizvod)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Racun.BrojRacuna)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Kolicina)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CijenaPoKomadu)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PopustUPostocima)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UkupnaCijena)
+            </td>
+            <td class="product">
+                <a href="#">@Html.DisplayFor(modelItem => item.Proizvod.Naziv)</a>
+                <span class="text">
+                    Kategorija: @Html.DisplayFor(modelItem => item.Proizvod.Potkategorija.Kategorija.Naziv),
+                    Potkategorija: @Html.DisplayFor(modelItem => item.Proizvod.Potkategorija.Naziv)
+                </span>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Racun.BrojRacuna)
+            </td>
+            
+        </tr>
+
+     }
+
+</table>
+
+
+
+

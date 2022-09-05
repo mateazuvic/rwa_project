@@ -1,0 +1,120 @@
+﻿
+@{
+    ViewBag.Title = "Products";
+}
+
+<h2>Products</h2>
+<p>
+    @Html.ActionLink("Create New", "CreatePr")
+</p>
+<div id="products">
+    <table class="table table-striped">
+        <tr>
+            <th>Naziv</th>
+            <th>Broj</th>
+            <th>Boja</th>
+            <th>Minimalna količina na skladištu</th>
+            <th>Cijena bez PDV</th>
+            <th>PotkategorijaID</th>
+            <th>Potkategorija</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </table>
+</div>
+
+@section scripts{
+    <script>
+
+        $.ajax({
+            url: '@Url.Action(actionName:"GetProducts", controllerName: "Products")',
+            success: function (proizvodi) {
+                $("products").fadeIn(500);
+                //console.log(proizvodi);
+
+                $(proizvodi).each((index, proizvod) => {
+                    $("table.table").append(`<tr>
+                    <td>${proizvod.Naziv}</td>
+                    <td>${proizvod.BrojProizvoda}</td>
+                    <td>${proizvod.Boja}</td>
+                    <td>${proizvod.MinimalnaKolicinaNaSkladistu}</td>
+                    <td>${proizvod.CijenaBezPDV}</td>
+                    <td>${proizvod.PotkategorijaID}</td>
+                    <td>${proizvod.Potk.Naziv}</td>
+                    <td><button class="btn btn-success btn-sm btnEdit" data-id=${proizvod.IDProizvod}>Edit</button></td>
+                    <td><button class="btn btn-danger btn-sm btnDelete" data-id=${proizvod.IDProizvod} data-naziv=${proizvod.Naziv}> Delete</button ></td >
+                    </tr>`);
+
+
+                })
+
+
+            }
+
+        });
+
+        let deleteBtn;
+
+        const myTable = $('.table')
+            .on('click', '.btnEdit', onEditEvent)
+            .on('click', '.btnDelete', onDeleteEvent);
+
+
+
+        function onEditEvent(e) {
+            console.log("jeeej");
+            const { id } = this.dataset;
+            EditProducts(id);
+        }
+
+        function onDeleteEvent(e) {
+            deleteBtn = this;
+            const { id, naziv} = deleteBtn.dataset;
+            if (confirm(`Do you really want to delete product ${naziv}?`)) {
+                DeleteProducts(id);
+            }
+        }
+
+        function EditProducts(id) {
+            $.ajax({
+                url: `@Url.Action(actionName:"UpdateProduct", controllerName:"Products")/${id}`,
+                method: 'get'
+
+            })
+                .done(function (message) {
+                    console.log('Detalji');
+                    window.location.href = `@Url.Action(actionName:"UpdateProduct", controllerName:"Products")/${id}`;
+
+
+                })
+
+        }
+
+        function DeleteProducts(id) {
+           
+                $.ajax({
+                    url: `@Url.Action(actionName:"DeleteProduct", controllerName:"Products")/${id}`,
+                    method: 'delete'
+
+                })
+                    .done(function (message) {
+                        console.log('Delete');
+                        $('.table')
+                            .find(`[data-id=${id}]`)
+                            .parents('tr')
+                            .hide(500);
+
+
+                    })
+
+            
+        }
+
+    </script>
+
+
+}
+
+@Html.Partial("_ProductsCount", (int)ViewBag.productsCount)
+
+

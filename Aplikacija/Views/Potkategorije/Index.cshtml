@@ -1,0 +1,102 @@
+﻿@model IEnumerable<Aplikacija.Potkategorija>
+
+@{
+    ViewBag.Title = "Subcategories";
+}
+
+<h2>Subcategories</h2>
+
+<p>
+    @Html.ActionLink("Create New", "CreateP")
+</p>
+<table class="table table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.IDPotkategorija)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.KategorijaID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Kat.Naziv)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Naziv)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.IDPotkategorija)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.KategorijaID)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Kat.Naziv)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Naziv)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.IDPotkategorija }, new { @class= "btn btn-primary btn-sm"}) 
+        @Html.ActionLink(linkText: "Delete", actionName: "Remove", htmlAttributes: new { @class = "btn btn-danger btn-sm", data_id=item.IDPotkategorija,
+       data_naziv=item.Naziv},
+                routeValues: new { id = item.IDPotkategorija } )
+        
+</tr>
+}
+
+</table>
+
+@Html.Partial("_SubcategoriesCount", (int)ViewBag.potkCount)
+
+@section scripts{
+    <script>
+        $('.btn-danger').on('click', function (e) {
+            e.preventDefault();
+            //console.log(this.dataset);
+            const { id, naziv } = this.dataset;
+
+            if (confirm(`Do you really want to delete subcategory ${naziv}?`)) {
+                $.ajax({
+                    url: `@Url.Action(controllerName: "Potkategorije", actionName:"Remove")`,
+                    data: { id },
+                    statusCode: {
+                        200: function () {
+                            $('.table')
+                                .find(`[data-id=${id}]`)
+                                .parents('tr')
+                                .hide(500);
+
+                        },
+                        400: function () {
+                            console.log('Subcategory is not deleted!');
+                        }
+
+                    }
+
+
+                })
+                .done(function (data) {
+                        console.log(data);
+
+                })
+                .fail(function (xhr, txtStatus, error) {
+                        console.log('status', xhr.status, 'statusText', xhr.statusText);
+                        console.log('statusTxt', txtStatus);
+                        console.log('error', error);
+                });
+            }
+        })
+
+
+       
+
+
+
+    </script>
+    
+    }
